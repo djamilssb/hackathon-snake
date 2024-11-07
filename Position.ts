@@ -14,4 +14,8 @@ export class Position{
     getX(){
         return this.x
     }
+
+    touch(point:Position) : boolean {
+        return (this.x === point.x && this.y === point.y)
+    }
 }

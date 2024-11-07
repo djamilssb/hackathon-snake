@@ -11,4 +11,7 @@ export class Position {
     getX() {
         return this.x;
     }
+    touch(point) {
+        return (this.x === point.x && this.y === point.y);
+    }
 }

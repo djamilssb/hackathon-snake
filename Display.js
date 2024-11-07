@@ -28,9 +28,6 @@ export class Display {
             this.ctx.fill();
         }
     }
-    clear() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    }
     refreshScore() {
         let score = document.getElementById("score");
         if (score != null)

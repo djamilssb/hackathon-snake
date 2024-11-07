@@ -1,5 +1,6 @@
 import { Apple } from "./Apple.js";
 import { Direction } from "./Direction.js";
+import { Position } from "./Position.js";
 import { Snake } from "./Snake.js";
 export class Game {
     constructor(height, width, speed) {
@@ -22,10 +23,10 @@ export class Game {
         let x = 0;
         let y = 0;
         let isTouch = true;
-        while (isTouch == true) {
+        while (isTouch) {
             x = Math.floor(Math.random() * this.width);
             y = Math.floor(Math.random() * this.height);
-            if (this.snake.touch(x, y) == true) {
+            if (this.snake.touch(new Position(x, y))) {
                 isTouch = true;
             }
             else {
@@ -42,9 +43,9 @@ export class Game {
     }
     hasLoose() {
         let head = this.snake.getBody()[0];
-        if (this.snake.touch(head.getX(), head.getY())) {
-            return true;
-        }
+        // if (this.snake.touch(this.apple)) {
+        //     return true
+        // }
         if (head.getX() < 0 || head.getY() < 0 || head.getX() >= this.width || head.getY() >= this.height) {
             return true;
         }
@@ -55,21 +56,17 @@ export class Game {
             let lastDirection = this.directions[this.directions.length - 1];
             switch (e.key) {
                 case "37":
-                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
-                        this.directions.push(Direction.LEFT);
-                    break;
+                    if (lastDirection == Direction.RIGHT || this.directions.push(Direction.RIGHT))
+                        break;
                 case "38":
-                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
-                        this.directions.push(Direction.UP);
-                    break;
+                    if (lastDirection == Direction.DOWN || this.directions.push(Direction.DOWN))
+                        break;
                 case "39":
-                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
-                        this.directions.push(Direction.RIGHT);
-                    break;
+                    if (lastDirection == Direction.LEFT || this.directions.push(Direction.LEFT))
+                        break;
                 case "40":
-                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
-                        this.directions.push(Direction.DOWN);
-                    break;
+                    if (lastDirection == Direction.UP || this.directions.push(Direction.UP))
+                        break;
             }
         };
     }
@@ -81,20 +78,23 @@ export class Game {
             }
             let newDir = this.directions[0];
             this.snake.grow(newDir);
-            if (this.snake.touch(this.apple.getX(), this.apple.getY()) == false) {
-                this.snake.cropTail();
-            }
-            else {
+            if (this.snake.touch(this.apple)) {
                 point = point + 1;
                 this.resetApple();
                 console.log(this.score);
             }
+            else {
+                this.snake.cropTail();
+            }
         }
         else {
-            this.resetApple();
+            return true;
         }
-        display.drawCircle(10, 10, "red");
-        display.drawRectangle(9, 9, "green");
+        display.drawCircle(this.apple.getX(), this.apple.getY(), "red");
+        let body = this.snake.getBody();
+        for (let i = 0; i < body.length; i++) {
+            display.drawRectangle(body[i].getX(), body[i].getY(), "blue");
+        }
         display.refreshScore();
         return false;
     }

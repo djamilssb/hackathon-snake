@@ -39,9 +39,7 @@ export class Display {
         }
     }
 
-    clear() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-    }
+
   
     public refreshScore(){
         let score : HTMLElement|null = document.getElementById("score");
@@ -57,7 +55,7 @@ export class Display {
             const delta = chrono - lastChrono;
             
             if (delta >= this.speed) {
-                if(this.ctx!=null){
+                if(this.ctx!=null){                    
                     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
                     done = game.play(this);
                     this.score = game.getScore();

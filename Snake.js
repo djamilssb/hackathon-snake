@@ -32,12 +32,13 @@ export class Snake extends Position {
     getBody() {
         return this.body;
     }
-    touch(x, y) {
-        for (let i = 1; i < this.getBody().length; i++) {
-            if (this.getBody()[i].getX() == x && this.getBody()[i].getY() == y) {
-                return true;
-            }
-        }
-        return false;
+    touch(aPoint) {
+        return this.body[0].touch(aPoint);
+        // for (let i = 1; i < this.getBody().length; i++) {
+        //     if (this.getBody()[i].getX() == x && this.getBody()[i].getY() == y) {
+        //         return true
+        //     }
+        // }
+        // return false;
     }
 }
