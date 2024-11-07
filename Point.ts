@@ -5,7 +5,7 @@ export class Point extends Apple {
         super(x,y)
     }
 
-    public touch(point:Point) : boolean {
+    touch(point:Point) : boolean {
         return (this.x === point.x && this.y === point.y)
     }
 }

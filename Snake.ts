@@ -9,7 +9,7 @@ export class Snake extends Position {
         this.body.push(new Position(x,y))
     }
 
-    public grow(d:Direction){
+    grow(d:Direction){
         let x = this.body[0].getX()
         let y = this.body[0].getY()
         switch (d) {

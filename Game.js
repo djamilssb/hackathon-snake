@@ -5,6 +5,7 @@ export class Game {
     constructor(height, width, speed) {
         this.directions = [Direction.RIGHT];
         this.height = height;
+        this.scale = 0;
         this.width = width;
         this.speed = speed;
         this.apple = new Apple(20, 10);
@@ -39,7 +40,40 @@ export class Game {
     getScore() {
         return 0;
     }
-    gameLoop() {
+    hasLoose() {
+        let head = this.snake.getBody()[0];
+        if (this.snake.touch(head.getX(), head.getY())) {
+            return true;
+        }
+        if (head.getX() < 0 || head.getY() < 0 || head.getX() >= this.width || head.getY() >= this.height) {
+            return true;
+        }
+        return false;
+    }
+    handleEvents() {
+        document.onkeydown = (e) => {
+            let lastDirection = this.directions[this.directions.length - 1];
+            switch (e.key) {
+                case "37":
+                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
+                        this.directions.push(Direction.LEFT);
+                    break;
+                case "38":
+                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
+                        this.directions.push(Direction.UP);
+                    break;
+                case "39":
+                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
+                        this.directions.push(Direction.RIGHT);
+                    break;
+                case "40":
+                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
+                        this.directions.push(Direction.DOWN);
+                    break;
+            }
+        };
+    }
+    play(display) {
         let point = 0;
         if (!this.hasLoose()) {
             if (this.directions.length > 1) {
@@ -59,41 +93,9 @@ export class Game {
         else {
             this.resetApple();
         }
-    }
-    hasLoose() {
-        let head = this.snake.getBody()[0];
-        if (this.snake.touch(head.getX(), head.getY())) {
-            return true;
-        }
-        if (head.getX() < 0 || head.getY() < 0 || head.getX() >= this.width || head.getY() >= this.height) {
-            return true;
-        }
-        return false;
-    }
-    handleEvents() {
-        document.onkeydown = (e) => {
-            let lastDirection = this.directions[this.directions.length - 1];
-            switch (e.keyCode) {
-                case 37:
-                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
-                        this.directions.push(Direction.LEFT);
-                    break;
-                case 38:
-                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
-                        this.directions.push(Direction.UP);
-                    break;
-                case 39:
-                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP)
-                        this.directions.push(Direction.RIGHT);
-                    break;
-                case 40:
-                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT)
-                        this.directions.push(Direction.DOWN);
-                    break;
-            }
-        };
-    }
-    play(display) {
+        display.drawCircle(10, 10, "red");
+        display.drawRectangle(9, 9, "green");
+        display.refreshScore();
         return false;
     }
 }

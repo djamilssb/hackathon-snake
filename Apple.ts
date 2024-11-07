@@ -5,12 +5,12 @@ export class Apple extends Position {
         super(x,y)
     }
 
-    public setApple(x:number,y:number){
+    setApple(x:number,y:number){
         this.x = x;
         this.y = y;
     }
 
-    public getApple(){
+    getApple(){
         return this.x , this.y
     }
 }

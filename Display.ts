@@ -41,7 +41,7 @@ export class Display {
 
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-      }
+    }
   
     public refreshScore(){
         let score : HTMLElement|null = document.getElementById("score");
