@@ -1,16 +1,16 @@
 import { Apple } from "./Apple.js";
 import { Direction } from "./Direction.js";
-import { Display } from "./Display.js";
 import { Snake } from "./Snake.js";
 export class Game {
     constructor(height, width, speed) {
+        //protected display:Display;
         this.directions = [Direction.RIGHT];
         this.height = height;
         this.width = width;
         this.speed = speed;
-        this.display = new Display(width, height, speed);
+        //this.display = new Display(width, height, speed);
         this.apple = new Apple(20, 10);
-        this.snake = new Snake(10, 10);
+        this.snake = new Snake(20, 10);
     }
     getApple() {
         return this.apple;
@@ -41,6 +41,16 @@ export class Game {
         return 0;
     }
     play(display) {
+        return false;
+    }
+    hasLoose() {
+        let head = this.snake.getBody()[0];
+        if (this.snake.touch(head.getX(), head.getY())) {
+            return true;
+        }
+        if (head.getX() < 0 || head.getY() < 0 || head.getX() >= this.width || head.getY() >= this.height) {
+            return true;
+        }
         return false;
     }
 }

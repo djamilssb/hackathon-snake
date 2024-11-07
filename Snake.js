@@ -23,7 +23,7 @@ export class Snake extends Position {
                 x = x + 1;
                 break;
         }
-        const head = new Position(x, y);
+        let head = new Position(x, y);
         this.body.unshift(head);
     }
     cropTail() {

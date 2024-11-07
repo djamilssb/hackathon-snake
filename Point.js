@@ -4,13 +4,6 @@ export class Point {
         this.y = y;
     }
     touch(point) {
-        if (this.x === point.x || this.y === point.y) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    move() {
+        return (this.x === point.x && this.y === point.y);
     }
 }

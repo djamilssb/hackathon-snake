@@ -10,16 +10,6 @@ export class Point {
     }
 
     public touch(point:Point) : boolean {
-        if (this.x === point.x || this.y === point.y){
-            return true
-        }
-        else {
-            return false
-        }
+        return (this.x === point.x && this.y === point.y)
     }
-
-    public move() {
-        
-    }
-
 }
