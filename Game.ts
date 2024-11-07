@@ -3,13 +3,14 @@ import { Direction } from "./Direction.js";
 import { Display } from "./Display.js";
 import { Snake } from "./Snake.js";
 
-export class Game{
+export class Game {
     protected height:number; 
     protected width:number;
     protected speed:number;
     protected directions: Direction[] = [Direction.RIGHT];
     protected snake: Snake;
     protected apple: Apple;
+    protected score:number;
 
     constructor(height:number,width:number, speed:number) {
         this.height = height;
@@ -17,6 +18,7 @@ export class Game{
         this.speed = speed;
         this.apple = new Apple(20, 10);
         this.snake = new Snake(20, 10);
+        this.score = 0;
     }
 
     getApple(): Apple {
@@ -52,10 +54,31 @@ export class Game{
         return 0;
     }
 
-    public play(display:Display):boolean{
-        return false;
-    }
+    
+    gameLoop() {
+        let point: number = 0
+        if (!this.hasLoose()) {
+            if (this.directions.length > 1){
+                this.directions.shift()
+            }
+            let newDir = this.directions[0]
+            this.snake.grow(newDir)
+            if (this.snake.touch(this.apple.getX(), this.apple.getY()) == false) {
+                this.snake.cropTail()
+            } 
+            else {
+                point = point + 1
+                this.resetApple()
+                console.log(this.score)
+            }
+        } 
+        else {
+            this.resetApple()
+        }
+        
 
+    }
+    
     hasLoose(): boolean {
         let head = this.snake.getBody()[0];
         if (this.snake.touch(head.getX(), head.getY())) {
@@ -66,4 +89,29 @@ export class Game{
         }
         return false
     }
+
+    handleEvents() {
+        document.onkeydown = (e) => {
+            let lastDirection = this.directions[this.directions.length - 1]
+            switch (e.keyCode) {
+                case 37:
+                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP) this.directions.push(Direction.LEFT)
+                    break;
+                case 38:
+                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT) this.directions.push(Direction.UP);
+                    break;
+                case 39:
+                    if (lastDirection == Direction.DOWN || lastDirection == Direction.UP) this.directions.push(Direction.RIGHT);
+                    break;
+                case 40:
+                    if (lastDirection == Direction.LEFT || lastDirection == Direction.RIGHT) this.directions.push(Direction.DOWN);
+                    break;
+            }
+        }
+    }
+
+    public play(display:Display):boolean {
+        return false
+    }
+
 }

@@ -3,7 +3,7 @@
 import { Game } from "./Game.js";
 
 export class Display {
-    private ctx : CanvasRenderingContext2D | null;
+    private ctx : CanvasRenderingContext2D;
     private scale : number;
     public speed : number;
     public score : number = 0;
@@ -14,12 +14,15 @@ export class Display {
       const canvas = document.createElement('canvas');
       canvas.width = width * this.scale;
       canvas.height = height * this.scale;
-      this.ctx = canvas.getContext('2d');
+      this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      document.body.appendChild(canvas);
       let display : HTMLElement|null = document.getElementById("display");
       if(display!=null) display.appendChild(canvas);
     }
+
+    
   
-    public drawRectangle(x:number, y:number, color:string):void {
+    public drawRectangle(x:number, y:number, color:string) {
         if(this.ctx != null){
             this.ctx.beginPath()
             this.ctx.fillStyle = color
@@ -27,7 +30,7 @@ export class Display {
         }
     }
     
-    public drawCircle(x:number, y:number, color:string):void {
+    public drawCircle(x:number, y:number, color:string) {
         if(this.ctx != null){
             this.ctx.beginPath()
             this.ctx.fillStyle = color
@@ -35,6 +38,10 @@ export class Display {
             this.ctx.fill()
         }
     }
+
+    clear() {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+      }
   
     public refreshScore(){
         let score : HTMLElement|null = document.getElementById("score");

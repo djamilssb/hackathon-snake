@@ -1,12 +1,8 @@
 import { Apple } from "./Apple.js";
 
-export class Point {
-    protected x:number ;
-    protected y:number ;
-
+export class Point extends Apple {
     constructor(x:number,y:number){
-        this.x = x;
-        this.y = y;
+        super(x,y)
     }
 
     public touch(point:Point) : boolean {

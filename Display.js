@@ -8,6 +8,7 @@ export class Display {
         canvas.width = width * this.scale;
         canvas.height = height * this.scale;
         this.ctx = canvas.getContext('2d');
+        document.body.appendChild(canvas);
         let display = document.getElementById("display");
         if (display != null)
             display.appendChild(canvas);
@@ -26,6 +27,9 @@ export class Display {
             this.ctx.arc(x * this.scale + this.scale / 2, y * this.scale + this.scale / 2, this.scale / 2, 0, 2 * Math.PI);
             this.ctx.fill();
         }
+    }
+    clear() {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
     refreshScore() {
         let score = document.getElementById("score");

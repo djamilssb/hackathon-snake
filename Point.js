@@ -1,7 +1,7 @@
-export class Point {
+import { Apple } from "./Apple.js";
+export class Point extends Apple {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
     touch(point) {
         return (this.x === point.x && this.y === point.y);

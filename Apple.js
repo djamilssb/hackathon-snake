@@ -1,5 +1,5 @@
-import { Point } from "./Point.js";
-export class Apple extends Point {
+import { Position } from "./Position.js";
+export class Apple extends Position {
     constructor(x, y) {
         super(x, y);
     }
