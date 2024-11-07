@@ -10,7 +10,24 @@ export class Snake extends Position {
     }
 
     public grow(d:Direction){
-
+        let x = this.body[0].getX()
+        let y = this.body[0].getY()
+        switch (d) {
+            case Direction.DOWN:
+                y = y + 1
+                break
+            case Direction.UP:
+                y = y - 1
+                break
+            case Direction.LEFT:
+                x = x - 1
+                break
+            case Direction.RIGHT:
+                x = x + 1
+                break
+        }
+        const head = new Position(x, y)
+        this.body.unshift(head)
     }
 
     cropTail() {
